@@ -5,44 +5,28 @@ def parse_input(user_input):
 
 
 def add_contact(args, contacts):
-    if len(args) == 2:
-        name, phone = args
-        contacts[name] = phone
-        return f"Contact {name} with phone number {phone} added."
-    else:
-        return "Invalid command. Usage: add [username] [phone]"
+    name, phone = args
+    contacts[name] = phone
+    return "Contact adadded."
 
 
 def change_contact(args, contacts):
-    if len(args) == 2:
-        name, new_phone = args
-        if name in contacts:
-            contacts[name] = new_phone
-            return f"Phone number for contact {name} updated to new {new_phone}."
-        else:
-            return f"Contact {name} not found."
+    if args[0] in contacts.keys():
+        add_contact(args, contacts)
     else:
-        return "Invalid command. Usage: change [username] [new_phone]"
+        raise (Exception())
 
 
 def show_phone(args, contacts):
-    if len(args) == 1:
-        name = args[0]
-        if name in contacts:
-            return f"Phone number for contact {name}: {contacts[name]}"
-        else:
-            return f"Contact {name} not found."
-    else:
-        return "Invalid command. Usage: phone [username]"
+    name = args[0]
+    return contacts[name] if name in contacts.keys() else "Not found"
 
 
-def show_all(contacts):
-    if contacts:
-        print("All saved contacts:")
-        for name, phone_number in contacts.items():
-            print(f"{name}: {phone_number}")
-    else:
-        print("No contact saved.")
+def show_all(args, contacts):
+    s = ""
+    for key in contacts:
+        s += f"{key:10} : {contacts[key]:10}\n"
+    return s
 
 
 def main():
@@ -61,10 +45,10 @@ def main():
             print(add_contact(args, contacts))
         elif command == "change":
             print(change_contact(args, contacts))
-        elif command == "phone":
+        elif command == "show":
             print(show_phone(args, contacts))
         elif command == "all":
-            show_all(contacts)
+            print(show_all(args, contacts))
         else:
             print("Invalid command.")
 
